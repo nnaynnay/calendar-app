@@ -32,3 +32,4 @@ To get more help on the `angular-cli` use `ng help` or go check out the [Angular
 
 ## Library used
 [ng2-bootstrap](https://github.com/valor-software/ng2-bootstrap)
+[primefaces] (http://www.primefaces.org/)
