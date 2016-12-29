@@ -3,12 +3,18 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { EventService } from './services/event.service';
+import { CalEventService } from './services/calEvent.service';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 
-import { ScheduleModule } from 'primeng/primeng';
+import { 
+  ScheduleModule, 
+  DialogModule,
+  InputMaskModule,
+  CheckboxModule,
+  ButtonModule
+} from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -19,10 +25,14 @@ import { ScheduleModule } from 'primeng/primeng';
     BrowserModule,
     FormsModule,
     HttpModule,
-    ScheduleModule
+    ScheduleModule,
+    DialogModule,
+    InputMaskModule,
+    CheckboxModule,
+    ButtonModule
   ],
   providers: [
-    EventService
+    CalEventService
   ],
   bootstrap: [AppComponent]
 })

@@ -18,10 +18,11 @@
       "prefix": "",
       "mobile": false,
       "styles": [
-        "styles.css",
+        "../node_modules/primeng/resources/primeng.min.css",
         "../node_modules/primeng/resources/themes/bootstrap/theme.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "../node_modules/fullcalendar/dist/fullcalendar.min.css"
+        "../node_modules/fullcalendar/dist/fullcalendar.min.css",
+        "styles.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
