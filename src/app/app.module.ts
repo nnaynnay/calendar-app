@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { CalEventService } from './services/calEvent.service';
+import { CalNotificationService } from './services/calNotification.service';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 
+import { PushNotificationsModule } from 'angular2-notifications';
 import { 
   ScheduleModule, 
   DialogModule,
@@ -29,10 +31,12 @@ import {
     DialogModule,
     InputMaskModule,
     CheckboxModule,
-    ButtonModule
+    ButtonModule,
+    PushNotificationsModule
   ],
   providers: [
-    CalEventService
+    CalEventService,
+    CalNotificationService
   ],
   bootstrap: [AppComponent]
 })

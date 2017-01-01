@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CalEventService } from '../../services/calEvent.service';
+import { CalNotificationService } from '../../services/calNotification.service';
 import { CalEvent } from '../../models/calEvent';
 import { Observable } from 'rxjs/Observable';
 
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './main.component.html',
   // styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
   events: Observable<CalEvent[]>;
 
@@ -20,7 +21,10 @@ export class MainComponent implements OnInit {
 
   showEventDialog: boolean = false;
 
-  constructor(private _calEventSvc: CalEventService) { 
+  constructor(
+    private _calEventSvc: CalEventService,
+    private _calNotificationSvc: CalNotificationService
+  ) { 
     
   }
 
@@ -35,6 +39,12 @@ export class MainComponent implements OnInit {
       right: 'prev,next today'
     };
 
+    this._calNotificationSvc.onInit();
+
+  }
+
+  ngOnDestroy() {
+    this._calNotificationSvc.onDestroy();
   }
 
   handleEventClick(e) {

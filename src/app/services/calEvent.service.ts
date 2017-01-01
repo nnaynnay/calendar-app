@@ -14,6 +14,7 @@ export class CalEventService {
   constructor() { 
       let initialEvents: CalEvent[];
       initialEvents = this.getLocalStorage('events') || [];
+      initialEvents.map((e) => this.toCalEvent(e));
       this._dataStore = { events: initialEvents };
       this._events = <BehaviorSubject<CalEvent[]>> new BehaviorSubject(initialEvents);
       this.events = this._events.asObservable();
@@ -54,6 +55,10 @@ export class CalEventService {
 
   getLocalStorage(key) {
       return JSON.parse(localStorage.getItem(key));
+  }
+
+  toCalEvent(e) {
+      return new CalEvent(e.id, e.title, e.start, e.end, e.enableNotification);
   }
 
 }
