@@ -43,26 +43,29 @@ export class MainComponent implements OnInit {
         
         let start = e.calEvent.start;
         let end = e.calEvent.end;
-        if(e.view.name === 'month') {
-            // start.stripTime();
-        }
-        
-        if(end) {
-            //end.stripTime();
-        }
 
         this.event.id = e.calEvent.id;
-        this.event.start = new Date(start.format("YYYY-MM-DD HH:mm:ss"));
-        this.event.end = (end) ? new Date(end.format("YYYY-MM-DD HH:mm:ss")) : end;
-        this.event.isAllDay = e.calEvent.allDay;
+        this.event.start = start.format(); 
+        this.event.end = (end) ? end.format() : end;
         this.showEventDialog = true;
     }
 
   handleDayClick(e) {
     this.event = new CalEvent();
-    this.event.start = new Date(e.date.format("YYYY-MM-DD HH:mm:ss"));
-    this.event.end = new Date(e.date.format("YYYY-MM-DD HH:mm:ss"));
+    this.event.start = e.date.format();
+    this.event.end = e.date.add(1, 'hour').format();
     this.showEventDialog = true;
+  }
+
+  handleEventDragDrop(e) {
+    let event:CalEvent;
+    event = <CalEvent>{
+      id: e.event.id,
+      title: e.event.title,
+      start: e.event.start,
+      end: e.event.end
+    };
+    this._calEventSvc.saveEvent(event);
   }
 
   saveEvent() {
@@ -73,6 +76,10 @@ export class MainComponent implements OnInit {
   deleteEvent() {
     this._calEventSvc.deleteEvent(this.event);
     this.showEventDialog = false;
+  }
+
+  deleteAllEvents() {
+    this._calEventSvc.deleteAllEvents();
   }
 
 }

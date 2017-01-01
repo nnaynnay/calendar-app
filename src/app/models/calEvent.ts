@@ -4,11 +4,9 @@ export class CalEvent {
 
     title: String;
     
-    start: Date;
+    start: String;
     
-    end: Date;
-    
-    isAllDay: Boolean;
+    end: String;
 
     constructor() {}
 
