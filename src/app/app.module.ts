@@ -12,6 +12,7 @@ import {
   ScheduleModule, 
   DialogModule,
   InputMaskModule,
+  CalendarModule,
   CheckboxModule,
   ButtonModule
 } from 'primeng/primeng';
@@ -28,6 +29,7 @@ import {
     ScheduleModule,
     DialogModule,
     InputMaskModule,
+    CalendarModule,
     CheckboxModule,
     ButtonModule
   ],

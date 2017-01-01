@@ -1,38 +1,44 @@
 import { Injectable } from '@angular/core';
 import { CalEvent } from '../models/calEvent';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CalEventService {
-  events: CalEvent[];
-
-  constructor() { 
-        this.events = [
-            <CalEvent>{
-                id: 'id123',
-                title: "Testing",
-                start: new Date(),
-                end: new Date(),
-                isAllDay: false
-            }
-        ];
+  events: Observable<CalEvent[]>;
+  private _events: BehaviorSubject<CalEvent[]>;
+  private _dataStore: {
+      events: CalEvent[]
   }
 
-  getEvents() {
-      return this.events; 
+  constructor() { 
+      let initialEvents = [];
+      this._dataStore = { events: [] };
+      this._events = <BehaviorSubject<CalEvent[]>> new BehaviorSubject(initialEvents);
+      this.events = this._events.asObservable();
+  }
+
+  get calEvents() {
+      return this._dataStore.events;
   }
 
   saveEvent(event: CalEvent) {
       if (event.id) {
-          this.events = this.events.map((e) => {
+          // Update existing event.
+          this._dataStore.events = this._dataStore.events.map((e) => {
               return (e.id === event.id) ? event : e ;
           });
       } else {
-          this.events.push(event);
+          // Create new event.
+          event.id = [new Date().getTime(), Math.random()].join('_');
+          this._dataStore.events.push(event);
       }
+      this._events.next(Object.assign({}, this._dataStore).events);
   }
 
   deleteEvent(event: CalEvent) {
-      this.events = this.events.filter(e => e.id !== event.id);
+      this._dataStore.events = this._dataStore.events.filter(e => e.id !== event.id);
+      this._events.next(Object.assign({}, this._dataStore).events);
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CalEventService } from '../../services/calEvent.service';
 import { CalEvent } from '../../models/calEvent';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'main',
@@ -9,7 +10,7 @@ import { CalEvent } from '../../models/calEvent';
 })
 export class MainComponent implements OnInit {
 
-  events: CalEvent[];
+  events: Observable<CalEvent[]>;
 
   event: CalEvent;
 
@@ -19,10 +20,13 @@ export class MainComponent implements OnInit {
 
   showEventDialog: boolean = false;
 
-  constructor(private _calEventSvc: CalEventService) { }
+  constructor(private _calEventSvc: CalEventService) { 
+    
+  }
 
   ngOnInit() {
-    
+    this.events = this._calEventSvc.events;
+
     this.defaultView = "agendaWeek";
 
     this.headerConfig = {
@@ -30,8 +34,6 @@ export class MainComponent implements OnInit {
       center: 'title',
       right: 'prev,next today'
     };
-
-    this.events = this._calEventSvc.getEvents();
 
   }
 
@@ -42,23 +44,24 @@ export class MainComponent implements OnInit {
         let start = e.calEvent.start;
         let end = e.calEvent.end;
         if(e.view.name === 'month') {
-            start.stripTime();
+            // start.stripTime();
         }
         
         if(end) {
-            end.stripTime();
-            this.event.end = end.format();
+            //end.stripTime();
         }
 
         this.event.id = e.calEvent.id;
-        this.event.start = start.format();
+        this.event.start = new Date(start.format("YYYY-MM-DD HH:mm:ss"));
+        this.event.end = (end) ? new Date(end.format("YYYY-MM-DD HH:mm:ss")) : end;
         this.event.isAllDay = e.calEvent.allDay;
         this.showEventDialog = true;
     }
 
   handleDayClick(e) {
     this.event = new CalEvent();
-    this.event.start = e.date.format();
+    this.event.start = new Date(e.date.format("YYYY-MM-DD HH:mm:ss"));
+    this.event.end = new Date(e.date.format("YYYY-MM-DD HH:mm:ss"));
     this.showEventDialog = true;
   }
 
