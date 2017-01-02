@@ -12,12 +12,14 @@ export class CalEventService {
   }
 
   constructor() { 
-      let initialEvents: CalEvent[];
-      initialEvents = this.getLocalStorage('events') || [];
-      initialEvents.map((e) => this.toCalEvent(e));
+      let initialEvents: CalEvent[] = this.loadInitialEvents();
       this._dataStore = { events: initialEvents };
       this._events = <BehaviorSubject<CalEvent[]>> new BehaviorSubject(initialEvents);
       this.events = this._events.asObservable();
+  }
+
+  loadInitialEvents() {
+      return (<CalEvent[]>this.getLocalStorage('events') || []).map((e) => this.toCalEvent(e));
   }
 
   saveEvent(event: CalEvent) {

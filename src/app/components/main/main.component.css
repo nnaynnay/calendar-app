@@ -39,6 +39,9 @@ body .fc .fc-slats tr:hover,
 body .fc .fc-slats tr:hover td {
     background-color: rgba(235,245,253,.6);
 }
+body .fc .fc-event:hover .fc-bg{
+    opacity: .1;
+}
 
 /* dialog box */
 .ui-form .ui-grid-row{

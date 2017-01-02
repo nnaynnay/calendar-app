@@ -3,13 +3,9 @@ import * as moment from 'moment';
 export class CalEvent {
 
     id: string;
-
     title: string;
-    
     start: string;
-    
     end: string;
-
     enableNotification: boolean;
 
     constructor(
@@ -39,6 +35,7 @@ export class CalEvent {
     }
 
     get shouldNotifyNow() {
+        // TODO: Should notify in advance.
         return this.enableNotification && this.isNow;
     }
 
