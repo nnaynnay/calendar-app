@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { CalEventService } from '../../services/calEvent.service';
 import { CalNotificationService } from '../../services/calNotification.service';
 import { CalEvent } from '../../models/calEvent';
@@ -7,7 +7,8 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'main',
   templateUrl: './main.component.html',
-  // styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MainComponent implements OnInit, OnDestroy {
 
@@ -34,9 +35,9 @@ export class MainComponent implements OnInit, OnDestroy {
     this.defaultView = "agendaWeek";
 
     this.headerConfig = {
-      left: false,
+      left: 'prev,next',
       center: 'title',
-      right: 'prev,next today'
+      right: 'today'
     };
 
     this._calNotificationSvc.onInit();
@@ -48,32 +49,31 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   handleEventClick(e) {
-        this.event = new CalEvent();
-        this.event.title = e.calEvent.title;
-        
-        let start = e.calEvent.start;
-        let end = e.calEvent.end;
-
-        this.event.id = e.calEvent.id;
-        this.event.start = start.format(); 
-        this.event.end = (end) ? end.format() : end;
-        this.showEventDialog = true;
-    }
+    this.event = new CalEvent();
+    this.event.id = e.calEvent.id;
+    this.event.title = e.calEvent.title;
+    this.event.start = e.calEvent.start.format(); 
+    this.event.end = (e.calEvent.end) ? e.calEvent.end.format() : e.calEvent.end;
+    this.event.enableNotification = e.calEvent.enableNotification;
+    this.showEventDialog = true;
+  }
 
   handleDayClick(e) {
     this.event = new CalEvent();
     this.event.start = e.date.format();
     this.event.end = e.date.add(1, 'hour').format();
+    this.event.enableNotification = e.date.enableNotification;
     this.showEventDialog = true;
   }
 
-  handleEventDragDrop(e) {
+  handleEventUpdate(e) {
     let event:CalEvent;
     event = <CalEvent>{
       id: e.event.id,
       title: e.event.title,
       start: e.event.start,
-      end: e.event.end
+      end: e.event.end,
+      enableNotification: e.event.enableNotification
     };
     this._calEventSvc.saveEvent(event);
   }

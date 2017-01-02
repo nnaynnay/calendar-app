@@ -1,0 +1,46 @@
+.fc {
+    margin-bottom: 1em;
+}
+
+/* calendar header */
+.fc th {
+    font-weight: normal;
+    padding: 2px 0;
+}
+.fc th,
+.fc td {
+    font-weight: normal;
+    color: #666;
+}
+.fc-toolbar .fc-left,
+.fc-toolbar .fc-center {
+    width: 33.33%;
+    float: left;
+}
+.fc-toolbar>.fc-center>*{
+    width: 100%;
+    text-align: center;
+}
+.fc-toolbar .fc-center h2{
+    font-size: 1.2em;
+    margin: .2em 0;
+}
+
+/* calendar body */
+body .ui-state-active, body .ui-state-highlight {
+    background-color: #C4E3FB;
+}
+body .fc .fc-event {
+    background-color: #279AF1;
+    border-color: #279AF1;
+}
+
+body .fc .fc-slats tr:hover,
+body .fc .fc-slats tr:hover td {
+    background-color: rgba(235,245,253,.6);
+}
+
+/* dialog box */
+.ui-form .ui-grid-row{
+    margin: .3em 0;
+}

@@ -1,11 +1,13 @@
-<button type="button" pButton icon="fa-close" (click)="deleteAllEvents()" label="DeleteAll"></button>
 <p-schedule 
+  class="calendar"
   [events]="events | async" 
   [header]="headerConfig" 
   [defaultView]="defaultView"
   [eventLimit]="4" 
   [editable]="true" 
-  (onEventDrop)="handleEventDragDrop($event)"
+  [allDaySlot]="false"
+  (onEventDrop)="handleEventUpdate($event)"
+  (onEventResize)="handleEventUpdate($event)"
   (onDayClick)="handleDayClick($event)"
   (onEventClick)="handleEventClick($event)">
 </p-schedule>
@@ -15,12 +17,12 @@
   [responsive]="true" 
   showEffect="fade" 
   width="300" 
-  reponsive="true"
   [modal]="false">
-  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
+  <div class="ui-grid ui-grid-responsive ui-fluid ui-form" *ngIf="event">
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="vin">Title</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="event.title" /></div>
+      <div class="ui-grid-col-8">
+        <input pInputText id="title" class="ui-inputtext" [(ngModel)]="event.title" /></div>
     </div>
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="start">Start</label></div>
@@ -35,9 +37,9 @@
       </div>
     </div>
     <div class="ui-grid-row">
-      <div class="ui-grid-col-4"><label for="allday">All Day</label></div>
+      <div class="ui-grid-col-4"><label for="enableNotification">Remind me</label></div>
       <div class="ui-grid-col-8">
-        <p-checkbox [(ngModel)]="event.allDay" binary="binary"></p-checkbox>
+        <p-checkbox id="enableNotification" [(ngModel)]="event.enableNotification" binary="binary"></p-checkbox>
       </div>
     </div>
   </div>
@@ -48,3 +50,9 @@
     </div>
   </footer>
 </p-dialog>
+
+<input 
+  class="btn btn-danger" 
+  type="button" 
+  (click)="deleteAllEvents()" 
+  value="Delete all events">
