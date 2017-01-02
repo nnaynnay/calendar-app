@@ -4,7 +4,7 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 
 ## Getting Started
 
-```
+```bash
 git clone https://github.com/nnaynnay/calendar-app.git
 cd calendar-app
 npm install
@@ -13,6 +13,9 @@ ng server
 ```
 
 ## Library used
+
 [momentjs] (http://momentjs.com/)
+
 [primefaces] (http://www.primefaces.org/)
+
 [angular2-notifications] (https://github.com/flauc/angular2-notifications)
